@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 
-//Middleware
+//Middleware for body parsing
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
@@ -18,4 +18,12 @@ app.use(express.json());
 
 app.listen(PORT, () => {
     console.log(`App is running on http://localhost:${PORT}`);
+});
+
+//Adding a test route
+
+app.get("/api/config", (req, res) => {
+    res.json({
+        noteTaker : "commencing process"
+    });
 });
