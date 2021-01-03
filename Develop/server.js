@@ -1,6 +1,7 @@
 //Requiring module(s)
 
 const express = require("express");
+const path = require("path");
 
 //Defining a port for the server
 
