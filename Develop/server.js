@@ -29,3 +29,9 @@ app.get("/api/config", (req, res) => {
 });
 
 //View Routes
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "notes.html"));
+});
