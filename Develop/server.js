@@ -27,3 +27,5 @@ app.get("/api/config", (req, res) => {
         noteTaker : "commencing process"
     });
 });
+
+//View Routes
