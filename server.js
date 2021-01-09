@@ -25,6 +25,8 @@ app.get("/api/config", (req, res) => {
     });
 });
 
+//Added something
+
 //View Routes
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"));
