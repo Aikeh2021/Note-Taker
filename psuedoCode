@@ -1,0 +1,5 @@
+
+1) Set up the delete and post routes
+2) Pass in the pre-created functions for each of the routes (from the index.js) so the appropriate thing happens to the note in each of the routes
+3) Test
+4) Push to heroku

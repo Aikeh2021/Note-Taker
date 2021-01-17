@@ -3,6 +3,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const { json } = require("express");
 
 //Defining a port for the server
 
@@ -38,7 +39,26 @@ app.get("/notes", (req, res) => {
 app.get("/api/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "db/db.json"));
 });
-app.post("/api/notes",)
+app.post("/api/notes", (req, res) => {
+    let note = req.body;
+    console.log(note);
+    
+
+    //Reading the JSON file
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, jsonData) => {
+        if (error){
+            console.log(error);
+        }
+        try{
+            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify([jsonData, note]), (err) =>{
+                err ? console.error(err) : console.log("The note has been saved to the database.");
+            })
+        }catch(err) {
+            console.log(err);
+        }
+    });
+
+})
 
 
 //Listening in on the PORT
