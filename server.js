@@ -47,26 +47,25 @@ app.post("/api/notes", (req, res) => {
 
     //Reading the JSON file and writing to the db.json if there is no other data in the database
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
-        if (data ===""){
+        if (!data){
             dbData.push(note);
             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(dbData), (err) => {
-                err ? console.error(err) : res.json(dbData); console.log("The note has been saved to the database.");
+                err ? console.error(err) : console.log("The note has been saved to the database.");
             })
-            console.log(error);
-        } else{
-                // let currentData = data.slice(0);
-                // dbData.push(currentData, JSON.stringify(note));
-                dbData.push(data, JSON.stringify(note));
-            fs.writeFile(path.join(__dirname, "db/db.json"), dbData, (err) => {
-                err ? console.error(err) : data.push(res.json(dbData)); console.log("The note has been saved to the database.");
+
+        } else {
+            dbData.push(note);
+            let allNotes = dbData.concat(JSON.parse(data));
+            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(allNotes), (err) => {
+            err ? console.error(err) : console.log("The note has been saved to the database.");
             })
-        
-            console.log(error);
         };
     });
-
+res.json(note);
 
 })
+
+
 
 
 //Listening in on the PORT
@@ -74,6 +73,25 @@ app.post("/api/notes", (req, res) => {
 app.listen(PORT, () => {
     console.log(`App is running on http://localhost:${PORT}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+//Partially works
+                // let currentData = data.slice(0);
+                // dbData.push(currentData, JSON.stringify(note));
+                // dbData.push(data, JSON.stringify(note));
+            // fs.writeFile(path.join(__dirname, "db/db.json"), dbData, (err) => {
+            //     err ? console.error(err) : console.log("The note has been saved to the database.");
+            // })
 
 
 
