@@ -16,7 +16,6 @@ const app = express();
 //Middleware for body parsing
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-// app.use("/public", express.static('server.js'));
 app.use(express.static('public'));
 
 //Adding a test route
@@ -75,68 +74,3 @@ app.listen(PORT, () => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-//Partially works
-                // let currentData = data.slice(0);
-                // dbData.push(currentData, JSON.stringify(note));
-                // dbData.push(data, JSON.stringify(note));
-            // fs.writeFile(path.join(__dirname, "db/db.json"), dbData, (err) => {
-            //     err ? console.error(err) : console.log("The note has been saved to the database.");
-            // })
-
-
-
-
-
-// app.post("/api/notes", (req, res) => {
-//     let note = req.body;
-//     console.log(note);
-    
-
-//     //Reading the JSON file
-//     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, jsonData) => {
-//         if (error){
-//             console.log(error);
-//         }
-//         try{
-//             newData = [jsonData];
-//             newData.push(note);
-//             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(newData), (err) =>{
-//                 err ? console.error(err) : res.json(newData);console.log("The note has been saved to the database.");
-//             })
-//         }catch(err) {
-//             console.log(err);
-//         }
-//     });
-
-
-
-
-    // Reading the JSON file
-    // fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, jsonData) => {
-    //     if (error){
-    //         console.log(error);
-    //     }else if(jsonData === ""){
-    //         try{
-    //         newData = [];
-    //         newData.push(JSON.stringify(note));
-    //             fs.writeFile(path.join(__dirname, "db/db.json"), newData, (err) => {
-    //             err ? console.error(err) : console.log("Database was empty. Note is now saved.");
-    //         })}catch(err){
-    //             console.log(err);
-    //         }
-    //     } else{
-    //         newData.push(JSON.stringify(notes))
-    //         fs.appendFile(path.join(__dirname, "db/db.json"), newData, (err) =>{
-    //             err ? console.error(err) : console.log("Note added to the database.")
-    //         })
-    //     }
