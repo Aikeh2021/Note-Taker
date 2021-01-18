@@ -16,7 +16,6 @@ const app = express();
 //Middleware for body parsing
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-// app.use("/public", express.static('server.js'));
 app.use(express.static('public'));
 
 //Adding a test route
@@ -41,31 +40,31 @@ app.get("/api/notes", (req, res) => {
 });
 app.post("/api/notes", (req, res) => {
     let note = req.body;
-    console.log(note);
+    // console.log(note);
+    let dbData = [];
     
 
-    //Reading the JSON file
-    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, jsonData) => {
-        if (jsonData ===""){
-            dbData = [];
+    //Reading the JSON file and writing to the db.json if there is no other data in the database
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
+        if (!data){
             dbData.push(note);
             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(dbData), (err) => {
-                err ? console.error(err) : res.json(dbData); console.log("The note has been saved to the database.");
+                err ? console.error(err) : console.log("The note has been saved to the database.");
             })
-            console.log(error);
-        }
-        // try{
-        //     newData = [jsonData];
-        //     newData.push(note);
-        //     fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(newData), (err) =>{
-        //         err ? console.error(err) : res.json(newData);console.log("The note has been saved to the database.");
-        //     })
-        // }catch(err) {
-        //     console.log(err);
-        // }
+
+        } else {
+            dbData.push(note);
+            let allNotes = dbData.concat(JSON.parse(data));
+            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(allNotes), (err) => {
+            err ? console.error(err) : console.log("The note has been saved to the database.");
+            })
+        };
     });
+res.json(note);
 
 })
+
+
 
 
 //Listening in on the PORT
@@ -75,49 +74,3 @@ app.listen(PORT, () => {
 });
 
 
-
-
-
-// app.post("/api/notes", (req, res) => {
-//     let note = req.body;
-//     console.log(note);
-    
-
-//     //Reading the JSON file
-//     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, jsonData) => {
-//         if (error){
-//             console.log(error);
-//         }
-//         try{
-//             newData = [jsonData];
-//             newData.push(note);
-//             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(newData), (err) =>{
-//                 err ? console.error(err) : res.json(newData);console.log("The note has been saved to the database.");
-//             })
-//         }catch(err) {
-//             console.log(err);
-//         }
-//     });
-
-
-
-
-    // Reading the JSON file
-    // fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, jsonData) => {
-    //     if (error){
-    //         console.log(error);
-    //     }else if(jsonData === ""){
-    //         try{
-    //         newData = [];
-    //         newData.push(JSON.stringify(note));
-    //             fs.writeFile(path.join(__dirname, "db/db.json"), newData, (err) => {
-    //             err ? console.error(err) : console.log("Database was empty. Note is now saved.");
-    //         })}catch(err){
-    //             console.log(err);
-    //         }
-    //     } else{
-    //         newData.push(JSON.stringify(notes))
-    //         fs.appendFile(path.join(__dirname, "db/db.json"), newData, (err) =>{
-    //             err ? console.error(err) : console.log("Note added to the database.")
-    //         })
-    //     }
