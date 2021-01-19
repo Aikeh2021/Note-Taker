@@ -62,9 +62,25 @@ res.json(note);
 
 });
 
-app.delete("/api/notes:id", (req, res) => {
 
-});
+app.delete("/api/notes/:id", (req, res) => {
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
+        const id = req.params.id;
+        const deleteNote = (note) => note.id === id;
+        console.log(data.findIndex(deleteNote));
+        // app.db('notes').remove({
+        //     id: id
+        // });
+    });
+    res.send("/notes")
+})
+
+
+
+
+    
+        
+            
 
 
 
