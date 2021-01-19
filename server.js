@@ -40,9 +40,7 @@ app.get("/api/notes", (req, res) => {
 });
 app.post("/api/notes", (req, res) => {
     let note = req.body;
-    // console.log(note);
     let dbData = [];
-    
 
     //Reading the JSON file and writing to the db.json if there is no other data in the database
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
