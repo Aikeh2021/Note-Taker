@@ -62,7 +62,11 @@ app.post("/api/notes", (req, res) => {
     });
 res.json(note);
 
-})
+});
+
+app.delete("/api/notes:id", (req, res) => {
+
+});
 
 
 
