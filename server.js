@@ -64,13 +64,14 @@ res.json(note);
 
 
 app.delete("/api/notes/:id", (req, res) => {
+    let dbData = [];
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
-        const id = req.params.id;
-        const deleteNote = (note) => note.id === id;
-        console.log(data.findIndex(deleteNote));
-        // app.db('notes').remove({
-        //     id: id
-        // });
+        let allNotes = dbData.concat(JSON.parse(data));
+        const id = req.query.id;
+        const notesToKeep = allNotes.filter(note => note.id !== id);
+        fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(notesToKeep), (err) => {
+            err ? console.error(err) : console.log("Here is your new array of notes.")
+        })
     });
     res.send("/notes")
 })

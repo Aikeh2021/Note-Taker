@@ -3,7 +3,6 @@ const $noteText = $(".note-textarea");
 const $saveNoteBtn = $(".save-note");
 const $newNoteBtn = $(".new-note");
 const $noteList = $(".list-container .list-group");
-let index = 0;
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
@@ -30,13 +29,6 @@ const deleteNote = (id) => {
   return $.ajax({
     url: "api/notes/" + id,
     method: "DELETE",
-    success: function(response){
-      const deleteNote = (note) => note.id === id;
-        console.log(data.findIndex(deleteNote));
-    },
-    error: function(err){
-      console.log(err);
-    }
   });
 };
 
@@ -126,9 +118,6 @@ const renderNoteList = (notes) => {
       const $delBtn = $(
         "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
       );
-      $delBtn.each(function(){
-        $(this).attr("id", index++);
-      })
       $li.append($delBtn);
     }
     return $li;
@@ -160,3 +149,5 @@ $noteText.on("keyup", handleRenderSaveBtn);
 
 // Gets and renders the initial list of notes
 getAndRenderNotes();
+
+
