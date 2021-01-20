@@ -40,9 +40,7 @@ app.get("/api/notes", (req, res) => {
 });
 app.post("/api/notes", (req, res) => {
     let note = req.body;
-    // console.log(note);
     let dbData = [];
-    
 
     //Reading the JSON file and writing to the db.json if there is no other data in the database
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
@@ -62,7 +60,28 @@ app.post("/api/notes", (req, res) => {
     });
 res.json(note);
 
+});
+
+
+app.delete("/api/notes/:id", (req, res) => {
+    let dbData = [];
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
+        let allNotes = dbData.concat(JSON.parse(data));
+        const id = req.query.id;
+        const notesToKeep = allNotes.filter(note => note.id !== id);
+        fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(notesToKeep), (err) => {
+            err ? console.error(err) : console.log("Here is your new array of notes.")
+        })
+    });
+    res.send("/notes")
 })
+
+
+
+
+    
+        
+            
 
 
 
