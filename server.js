@@ -44,14 +44,24 @@ app.post("/api/notes", (req, res) => {
 
     //Reading the JSON file and writing to the db.json if there is no other data in the database
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
+        let index = 0;
         if (!data){
             dbData.push(note);
+            dbData =  dbData.map(function(note){
+                note.id = index++;
+                return note;
+            });
             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(dbData), (err) => {
                 err ? console.error(err) : console.log("The note has been saved to the database.");
             })
 
         } else {
             dbData.push(note);
+            let index = 0;
+            dbData =  dbData.map(function(note){
+                note.id = index++;
+                return note;
+            })
             let allNotes = dbData.concat(JSON.parse(data));
             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(allNotes), (err) => {
             err ? console.error(err) : console.log("The note has been saved to the database.");
@@ -65,10 +75,16 @@ res.json(note);
 
 app.delete("/api/notes/:id", (req, res) => {
     let dbData = [];
+
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
         let allNotes = dbData.concat(JSON.parse(data));
-        const id = req.query.id;
-        const notesToKeep = allNotes.filter(note => note.id !== id);
+        // allNotes =  allNotes.map(function(note){
+        //     let index = 0;
+        //     note.id = index++;
+        //     return note;
+        // })
+
+        const notesToKeep = allNotes.filter(note => note.id !== req.query.id);
         fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(notesToKeep), (err) => {
             err ? console.error(err) : console.log("Here is your new array of notes.")
         })
