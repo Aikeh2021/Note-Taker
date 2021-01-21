@@ -15,7 +15,7 @@ The Note Taker Application provides an archive where you can jot down your ideas
 ## Installation
 
 If you would like to use the Note Taker app, please [click here](heroku link).
-If you would like to view the github repository for this website, [click here](github link).
+If you would like to view the github repository for this website, [click here](https://github.com/Aikeh2021/Note-Taker).
 
 
 ## Usage
