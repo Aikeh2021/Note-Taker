@@ -46,26 +46,28 @@ app.post("/api/notes", (req, res) => {
 
     //Reading the JSON file and writing to the db.json if there is no other data in the database
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
-        let index = 0;
+        // let index = 0;
         if (!data){
             dbData.push(note);
-            dbData =  dbData.map(function(note){
-                note.id = index++;
-                return note;
+            let noteArray = dbData.map(function(noteItem){
+                let lastItem = dbData[dbData.length -1];
+                noteItem.id = lastItem + 1;
+                return noteItem;
             });
-            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(dbData), (err) => {
+            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(noteArray), (err) => {
                 err ? console.error(err) : console.log("The note has been saved to the database.");
             })
 
         } else {
             dbData.push(note);
-            let index = 0;
-            dbData =  dbData.map(function(note){
-                note.id = index++;
-                return note;
-            })
             let allNotes = dbData.concat(JSON.parse(data));
-            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(allNotes), (err) => {
+            let lastItem = allNotes[allNotes.length -1];
+            let finalNotes = allNotes.map(function(noteItem){
+                noteItem.id = lastItem + 1;
+                return noteItem;
+            })
+            // let allNotes = dbData.concat(JSON.parse(data));
+            fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(finalNotes), (err) => {
             err ? console.error(err) : console.log("The note has been saved to the database.");
             })
         };
@@ -106,3 +108,57 @@ app.listen(PORT, () => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app.post("/api/notes", (req, res) => {
+//     let note = req.body;
+//     let dbData = [];
+
+//     //Reading the JSON file and writing to the db.json if there is no other data in the database
+//     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
+//         let index = 0;
+//         if (!data){
+//             dbData.push(note);
+//             dbData =  dbData.map(function(note){
+//                 note.id = index++;
+//                 return note;
+//             });
+//             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(dbData), (err) => {
+//                 err ? console.error(err) : console.log("The note has been saved to the database.");
+//             })
+
+//         } else {
+//             dbData.push(note);
+//             let index = 0;
+//             dbData =  dbData.map(function(note){
+//                 note.id = index++;
+//                 return note;
+//             })
+//             let allNotes = dbData.concat(JSON.parse(data));
+//             fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(allNotes), (err) => {
+//             err ? console.error(err) : console.log("The note has been saved to the database.");
+//             })
+//         };
+//     });
+// res.json(note);
+// });
