@@ -38,6 +38,8 @@ app.get("/notes", (req, res) => {
 app.get("/api/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "db/db.json"));
 });
+
+
 app.post("/api/notes", (req, res) => {
     let note = req.body;
     let dbData = [];
@@ -69,28 +71,23 @@ app.post("/api/notes", (req, res) => {
         };
     });
 res.json(note);
-
 });
 
 
 app.delete("/api/notes/:id", (req, res) => {
     let dbData = [];
+    let id = req.params.id;
 
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (error, data) => {
         let allNotes = dbData.concat(JSON.parse(data));
-        // allNotes =  allNotes.map(function(note){
-        //     let index = 0;
-        //     note.id = index++;
-        //     return note;
-        // })
-
-        const notesToKeep = allNotes.filter(note => note.id !== req.query.id);
+        const notesToKeep = allNotes.filter(note => note.id !== id);
         fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(notesToKeep), (err) => {
             err ? console.error(err) : console.log("Here is your new array of notes.")
         })
     });
     res.send("/notes")
 })
+
 
 
 
