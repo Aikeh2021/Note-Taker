@@ -25,6 +25,8 @@ To use this website properly, navigate to the website and click "Get started." F
 
 ![Note Taker Homepage](public/assets/images/Note-taker-screenshot.png)
 
+You can also click on the title of the note on the left side of the screen and the note's contents will be displayed again. You cannot, however, edit the contents of a note that was already saved.
+Once you are no longer in need of the contents of a note, you may delete the note by clicking on the red trashcan icon beside the note's title on the left side of the page.
 
 ## License
 
